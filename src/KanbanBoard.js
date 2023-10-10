@@ -1,23 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './KanbanBoard.css';
 
-function mapPriorityLevelToName(priorityLevel) {
-  switch (priorityLevel) {
-    case 4:
-      return 'Urgent';
-    case 3:
-      return 'High';
-    case 2:
-      return 'Medium';
-    case 1:
-      return 'Low';
-    case 0:
-      return 'No priority';
-    default:
-      return 'Unknown';
-  }
-}
-
 function KanbanBoard() {
   const [tickets, setTickets] = useState([]);
   const [users, setUsers] = useState([]);
@@ -50,6 +33,23 @@ function KanbanBoard() {
     return user?.name;
   };
 
+  const mapPriorityLevelToName = (priorityLevel) => {
+    switch (priorityLevel) {
+      case 4:
+        return 'Urgent';
+      case 3:
+        return 'High';
+      case 2:
+        return 'Medium';
+      case 1:
+        return 'Low';
+      case 0:
+        return 'No priority';
+      default:
+        return 'Unknown';
+    }
+  };
+  
   // Define grouping and sorting functions
   const groupByStatus = (tickets) => {
     // Group tickets by status
