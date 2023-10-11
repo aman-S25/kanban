@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import KanbanBoard from './KanbanBoard'; // Import the KanbanBoard component
+import KanbanBoard from './components/KanbanBoard'; // Import the KanbanBoard component
 
 function App() {
   return (
