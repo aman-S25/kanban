@@ -21,7 +21,7 @@ function KanbanBoard() {
       });
   }, []);
 
-  //******** This is Function to determine the user availability CSS class ****************
+  //******** This is Function to determine the user availability ****************
   const ticketUserAvailabilityClass = (userId) => {
     const user = users.find((user) => user.id === userId);
     return user?.available ? 'user-available' : 'user-unavailable';

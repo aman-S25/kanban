@@ -206,6 +206,9 @@
 }
 
 /* ******* Show the dropdown menu when the dropdown button is clicked *************** */
+.dropdown {
+  width: max-content;
+}
 .dropdown:hover .dropdown-content {
   display: block;
 }
