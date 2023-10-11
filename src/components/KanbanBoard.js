@@ -4,11 +4,11 @@ import './KanbanBoard.css';
 function KanbanBoard() {
   const [tickets, setTickets] = useState([]);
   const [users, setUsers] = useState([]);
-  const [groupingOption, setGroupingOption] = useState('status'); // Default grouping by Status
-  const [sortingOption, setSortingOption] = useState('priority'); // Default sorting by Priority
+  const [groupingOption, setGroupingOption] = useState('status'); //***** For Default grouping by Status ****
+  const [sortingOption, setSortingOption] = useState('priority'); //***** For Default sorting by Priority *******
 
   useEffect(() => {
-    // Fetch data from the API
+    // ******* Here I am  Fetching data from the API *****************
     fetch('https://api.quicksell.co/v1/internal/frontend-assignment')
       .then((response) => response.json())
       .then((data) => {
@@ -21,13 +21,14 @@ function KanbanBoard() {
       });
   }, []);
 
-  // Function to determine the user availability CSS class
+  //******** This is Function to determine the user availability CSS class ****************
   const ticketUserAvailabilityClass = (userId) => {
     const user = users.find((user) => user.id === userId);
     return user?.available ? 'user-available' : 'user-unavailable';
   };
 
-  // Function to retrieve the user name based on userId
+
+  //********* here are Function to retrieve the user name based on userId ***************
   const ticketUserName = (userId) => {
     const user = users.find((user) => user.id === userId);
     return user?.name;
@@ -50,9 +51,9 @@ function KanbanBoard() {
     }
   };
   
-  // Define grouping and sorting functions
+  //***********  Defining grouping and sorting functions here*****************
   const groupByStatus = (tickets) => {
-    // Group tickets by status
+    //******* for Grouping tickets by status********
     const grouped = {};
     tickets.forEach((ticket) => {
       if (!grouped[ticket.status]) {
@@ -64,33 +65,34 @@ function KanbanBoard() {
   };
 
   const groupByUser = (tickets) => {
-    // Group tickets by user
+    //******* for Grouping tickets by Users********
     const grouped = {};
     tickets.forEach((ticket) => {
-      if (!grouped[ticket.userId]) {
-        grouped[ticket.userId] = [];
+      if (!grouped[ticketUserName(ticket.userId)]) {
+        grouped[ticketUserName(ticket.userId)] = [];
       }
-      grouped[ticket.userId].push(ticket);
+      grouped[ticketUserName(ticket.userId)].push(ticket);
     });
     return grouped;
   };
 
   const groupByPriority = (tickets) => {
-    // Group tickets by priority
+    //******* for Grouping tickets by Priority********
     const grouped = {};
     tickets.forEach((ticket) => {
-      if (!grouped[ticket.priority]) {
-        grouped[ticket.priority] = [];
+      if (!grouped[mapPriorityLevelToName(ticket.priority)]) {
+        grouped[mapPriorityLevelToName(ticket.priority)] = [];
       }
-      grouped[ticket.priority].push(ticket);
+      grouped[mapPriorityLevelToName(ticket.priority)].push(ticket);
     });
     return grouped;
   };
 
-  // Update the groupedTickets based on the chosen grouping option
+  //*********** for Updating the groupedTickets based on the chosen grouping option ****************
   const [groupedTickets, setGroupedTickets] = useState(groupByStatus(tickets));
 
-  // Function to sort tickets
+
+  //****** this is Function to sort tickets ****************
   const sortTickets = (ticketsToSort, sortingOption) => {
     return ticketsToSort.sort((a, b) => {
       if (sortingOption === 'title') {
@@ -101,10 +103,10 @@ function KanbanBoard() {
     });
   };
 
-  // Update the sortedTickets based on the chosen sorting option
+  //***************  for Updating the sortedTickets based on the chosen sorting option *************
   const [sortedTickets, setSortedTickets] = useState(sortTickets(tickets, sortingOption));
 
-  // Update groupedTickets and sortedTickets when grouping or sorting options change
+  // *********** To Update groupedTickets and sortedTickets when grouping or sorting options change ***********
   useEffect(() => {
     if (groupingOption === 'status') {
       setGroupedTickets(groupByStatus(tickets));
@@ -119,7 +121,7 @@ function KanbanBoard() {
     setSortedTickets(sortTickets(tickets, sortingOption));
   }, [sortingOption, tickets]);
 
-  // Load user preferences from localStorage (if available)
+  //*********** For Loading user preferences from localStorage (if available) ***************
   useEffect(() => {
     const savedGroupingOption = localStorage.getItem('groupingOption');
     if (savedGroupingOption) {
@@ -132,7 +134,7 @@ function KanbanBoard() {
     }
   }, []);
 
-  // Update user preferences in localStorage when they change
+  // ************ For Updating user preferences in localStorage when they change *****************
   useEffect(() => {
     localStorage.setItem('groupingOption', groupingOption);
   }, [groupingOption]);
@@ -144,7 +146,7 @@ function KanbanBoard() {
   return (
     <>
       <div className="dropdown">
-        {/* Add UI controls for grouping and sorting options here */}
+        {/* ****** Adding UI controls for grouping and sorting options here ********* */}
         <button className="dropbtn">Group & Sort</button>
         <div className="dropdown-content">
           <button onClick={() => setGroupingOption('status')}>Group by Status</button>
@@ -156,7 +158,7 @@ function KanbanBoard() {
       </div>
 
       <div className="kanban-board">
-        {/* Render grouped and sorted tickets */}
+        {/* ********* To Render grouped and sorted tickets ************ */}
         {groupedTickets &&
           Object.keys(groupedTickets).map((groupKey) => (
             <div key={groupKey} className="column">

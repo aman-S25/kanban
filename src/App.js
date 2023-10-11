@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
-import KanbanBoard from './components/KanbanBoard'; // Import the KanbanBoard component
+
+//************* Importing the KanbanBoard component**********
+import KanbanBoard from './components/KanbanBoard';
 
 function App() {
   return (
@@ -9,7 +11,7 @@ function App() {
         <h1>Kanban Board App</h1>
       </header>
       <main>
-        <KanbanBoard /> {/* Render the KanbanBoard component */}
+        <KanbanBoard /> 
       </main>
     </div>
   );
